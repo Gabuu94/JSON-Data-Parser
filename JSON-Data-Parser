@@ -1,0 +1,70 @@
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+
+namespace YourNamespace
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            string jsonData = @"
+            {
+                ""visibility"": true,
+                ""tillNumber"": ""123456"",
+                ""tillName"": ""Kipkoech Gabriel"",
+                ""depositAmount"": ""100"",
+                ""showBannerAd"": true,
+                ""showInterstitialAd"": true,
+                ""showNativeAd"": true,
+                ""users"": [
+                    {
+                        ""userName"": ""a"",
+                        ""winTime"": ""10 Minutes ago"",
+                        ""amount"": ""6000"",
+                        ""phoneNumber"": ""0707***818""
+                    },
+                    {
+                        ""userName"": ""b"",
+                        ""winTime"": ""9 Minutes ago"",
+                        ""amount"": ""1000"",
+                        ""phoneNumber"": ""0781***392""
+                    },
+                    // Add the rest of your JSON data here
+                ]
+            }";
+
+            // Deserialize the JSON data into objects
+            var data = JsonConvert.DeserializeObject<RootData>(jsonData);
+
+            // Access and manipulate the data as needed
+            Console.WriteLine($"Till Name: {data.tillName}");
+            Console.WriteLine($"Deposit Amount: {data.depositAmount}");
+
+            foreach (var user in data.users)
+            {
+                Console.WriteLine($"User Name: {user.userName}, Win Time: {user.winTime}, Amount: {user.amount}, Phone Number: {user.phoneNumber}");
+            }
+        }
+    }
+
+    public class UserData
+    {
+        public string userName { get; set; }
+        public string winTime { get; set; }
+        public string amount { get; set; }
+        public string phoneNumber { get; set; }
+    }
+
+    public class RootData
+    {
+        public bool visibility { get; set; }
+        public string tillNumber { get; set; }
+        public string tillName { get; set; }
+        public string depositAmount { get; set; }
+        public bool showBannerAd { get; set; }
+        public bool showInterstitialAd { get; set; }
+        public bool showNativeAd { get; set; }
+        public List<UserData> users { get; set; }
+    }
+}
